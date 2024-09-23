@@ -10,7 +10,7 @@ The source code is organized into one Maven multi-module project. Each module im
 
 The book is currently in progress. The first MEAP release is expected in early 2020.
 
-Link to the book: https://www.manning.com/books/microservices-patterns
+Link to the book: <https://www.manning.com/books/microservices-patterns>
 
 ## Requirements
 
@@ -36,16 +36,6 @@ Then you can build the application by executing the following command, in each f
 ```bash
 ./gradlew build
 ```
-
-## Running the application
-
-To run the application, you need to have Java 8 installed. You can run the application by executing the following command:
-
-```
-java -jar <module-name>/target/<module-name>-1.0-SNAPSHOT.jar
-```
-
-Replace `<module-name>` with the name of the module you want to run.
 
 ## License
 
