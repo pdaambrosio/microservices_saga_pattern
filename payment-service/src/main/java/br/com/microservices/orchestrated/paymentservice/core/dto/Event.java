@@ -1,11 +1,13 @@
-package br.com.microservices.orchestrated.orderservice.core.document;
+package br.com.microservices.orchestrated.paymentservice.core.dto;
 
+
+import br.com.microservices.orchestrated.paymentservice.core.dto.History;
+import br.com.microservices.orchestrated.paymentservice.core.dto.Order;
+import br.com.microservices.orchestrated.paymentservice.core.enums.ESagaStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,16 +16,14 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "event")
 public class Event {
 
-    @Id
     private String id;
     private String transactionId;
     private String orderId;
     private Order payload;
     private String source;
-    private String status;
+    private ESagaStatus status;
     private List<History> eventHistory;
     private LocalDateTime createdAt;
 }
