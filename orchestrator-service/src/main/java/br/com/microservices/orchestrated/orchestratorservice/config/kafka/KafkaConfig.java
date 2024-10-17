@@ -18,7 +18,6 @@ import java.util.Map;
 
 import static br.com.microservices.orchestrated.orchestratorservice.core.enums.ETopics.*;
 
-
 @EnableKafka
 @Configuration
 @RequiredArgsConstructor
@@ -71,10 +70,10 @@ public class KafkaConfig {
 
     private NewTopic buildTopic(String name) {
         return TopicBuilder
-                .name(name)
-                .replicas(REPLICA_COUNT)
-                .partitions(PARTITION_COUNT)
-                .build();
+            .name(name)
+            .partitions(PARTITION_COUNT)
+            .replicas(REPLICA_COUNT)
+            .build();
     }
 
     @Bean
@@ -125,10 +124,5 @@ public class KafkaConfig {
     @Bean
     public NewTopic inventoryValidationFailTopic() {
         return buildTopic(INVENTORY_FAIL.getTopic());
-    }
-
-    @Bean
-    public NewTopic notifyEndingTopic() {
-        return buildTopic(NOTIFY_ENDING.getTopic());
     }
 }
