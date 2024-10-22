@@ -77,17 +77,16 @@ public class KafkaConfig {
 
     private NewTopic buildTopic(String name) {
         return TopicBuilder
-                .name(name)
-                .replicas(REPLICA_COUNT)
-                .partitions(PARTITION_COUNT)
-                .build();
+            .name(name)
+            .partitions(PARTITION_COUNT)
+            .replicas(REPLICA_COUNT)
+            .build();
     }
 
     @Bean
     public NewTopic orchestratorTopic() {
         return buildTopic(orchestratorTopic);
     }
-
     @Bean
     public NewTopic inventorySuccessTopic() {
         return buildTopic(inventorySuccessTopic);
