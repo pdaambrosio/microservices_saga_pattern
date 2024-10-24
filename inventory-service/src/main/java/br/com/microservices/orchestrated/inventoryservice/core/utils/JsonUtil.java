@@ -1,4 +1,5 @@
 package br.com.microservices.orchestrated.inventoryservice.core.utils;
+
 import br.com.microservices.orchestrated.inventoryservice.core.dto.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

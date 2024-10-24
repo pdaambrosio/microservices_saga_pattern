@@ -46,39 +46,39 @@ public class InventoryService {
 
     private void checkCurrentValidation(Event event) {
         if (orderInventoryRepository.existsByOrderIdAndTransactionId(
-                event.getPayload().getId(), event.getTransactionId())) {
+            event.getPayload().getId(), event.getTransactionId())) {
             throw new ValidationException("There's another transactionId for this validation.");
         }
     }
 
     private void createOrderInventory(Event event) {
         event
-                .getPayload()
-                .getProducts()
-                .forEach(product -> {
-                    var inventory = findInventoryByProductCode(product.getProduct().getCode());
-                    var orderInventory = createOrderInventory(event, product, inventory);
-                    orderInventoryRepository.save(orderInventory);
-                });
+            .getPayload()
+            .getProducts()
+            .forEach(product -> {
+                var inventory = findInventoryByProductCode(product.getProduct().getCode());
+                var orderInventory = createOrderInventory(event, product, inventory);
+                orderInventoryRepository.save(orderInventory);
+            });
     }
 
     private OrderInventory createOrderInventory(Event event,
                                                 OrderProducts product,
                                                 Inventory inventory) {
         return OrderInventory
-                .builder()
-                .inventory(inventory)
-                .oldQuantity(inventory.getAvailable())
-                .orderQuantity(product.getQuantity())
-                .newQuantity(inventory.getAvailable() - product.getQuantity())
-                .orderId(event.getPayload().getId())
-                .transactionId(event.getTransactionId())
-                .build();
+            .builder()
+            .inventory(inventory)
+            .oldQuantity(inventory.getAvailable())
+            .orderQuantity(product.getQuantity())
+            .newQuantity(inventory.getAvailable() - product.getQuantity())
+            .orderId(event.getPayload().getId())
+            .transactionId(event.getTransactionId())
+            .build();
     }
 
     private void updateInventory(Order order) {
         order.getProducts().forEach(product -> {
-            var inventory = findInventoryByProductCode(product.getProduct().getCode());
+           var inventory = findInventoryByProductCode(product.getProduct().getCode());
             checkInventory(inventory.getAvailable(), product.getQuantity());
             inventory.setAvailable(inventory.getAvailable() - product.getQuantity());
             inventoryRepository.save(inventory);
@@ -99,12 +99,12 @@ public class InventoryService {
 
     private void addHistory(Event event, String message) {
         var history = History
-                .builder()
-                .source(event.getSource())
-                .status(event.getStatus())
-                .message(message)
-                .createdAt(LocalDateTime.now())
-                .build();
+            .builder()
+            .source(event.getSource())
+            .status(event.getStatus())
+            .message(message)
+            .createdAt(LocalDateTime.now())
+            .build();
         event.addToHistory(history);
     }
 
@@ -128,19 +128,19 @@ public class InventoryService {
 
     private void returnInventoryToPreviousValues(Event event) {
         orderInventoryRepository
-                .findByOrderIdAndTransactionId(event.getPayload().getId(), event.getTransactionId())
-                .forEach(orderInventory -> {
-                    var inventory = orderInventory.getInventory();
-                    inventory.setAvailable(orderInventory.getOldQuantity());
-                    inventoryRepository.save(inventory);
-                    log.info("Restored inventory for order {}: from {} to {}",
-                            event.getPayload().getId(), orderInventory.getNewQuantity(), inventory.getAvailable());
-                });
+            .findByOrderIdAndTransactionId(event.getPayload().getId(), event.getTransactionId())
+            .forEach(orderInventory -> {
+                var inventory = orderInventory.getInventory();
+                inventory.setAvailable(orderInventory.getOldQuantity());
+                inventoryRepository.save(inventory);
+                log.info("Restored inventory for order {}: from {} to {}",
+                    event.getPayload().getId(), orderInventory.getNewQuantity(), inventory.getAvailable());
+            });
     }
 
     private Inventory findInventoryByProductCode(String productCode) {
         return inventoryRepository
-                .findByProductCode(productCode)
-                .orElseThrow(() -> new ValidationException("Inventory not found by informed product."));
+            .findByProductCode(productCode)
+            .orElseThrow(() -> new ValidationException("Inventory not found by informed product."));
     }
 }
