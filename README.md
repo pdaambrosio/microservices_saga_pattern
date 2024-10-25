@@ -20,21 +20,30 @@ To build and run the application you need:
 - Gradle 7.2
 - Docker 20.10.8
 - Docker Compose 1.29.2
+- Make 4.2.1
 
 ## Building the application
 
-You can build the application by executing the following command:
+The build process involves the following steps:
 
-First you need start the docker-compose file the Kafka, RedPanda and the Databases, in the root of the project execute the following command:
+1. Build the application using Gradle in the `java` directory of each module
+2. Build the Docker images
+3. Start the application using Docker Compose
+
+To facilitate the build process, the repository contains a Makefile that automates these steps.
+
+To build the application, run the following command:
 
 ```bash
-docker-compose up --build -d
+make deploy
 ```
 
-Then you can build the application by executing the following command, in each folder service:
+The 'make deploy' command builds the application and starts it using Docker Compose.
+
+We see other commands in the Makefile using the following command:
 
 ```bash
-./gradlew build
+make help
 ```
 
 ## License
