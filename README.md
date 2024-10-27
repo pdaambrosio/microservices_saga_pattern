@@ -8,8 +8,6 @@ The book describes the architecture, design, and implementation of 25 microservi
 
 The source code is organized into one Maven multi-module project. Each module implements a single pattern.
 
-The book is currently in progress. The first MEAP release is expected in early 2020.
-
 Link to the book: <https://www.manning.com/books/microservices-patterns>
 
 ## Requirements
@@ -21,6 +19,16 @@ To build and run the application you need:
 - Docker 20.10.8
 - Docker Compose 1.29.2
 - Make 4.2.1
+
+## Applications
+
+The repository contains the following applications:
+
+- orchestrator-service - implements the orchestrator pattern
+- inventory-service - implements the inventory pattern
+- order-service - implements the order pattern
+- payment-service - implements the payment pattern
+- product-validation-service - implements the product validation pattern
 
 ## Building the application
 
